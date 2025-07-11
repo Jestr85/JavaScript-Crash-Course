@@ -161,3 +161,57 @@ document.querySelector('#title').style.fontSize = '30px'
 function toggleDarkTheme() {
     document.querySelector('body').classList.toggle('dark-theme')
 }
+
+
+    // Promises //
+
+const emailRef = document.querySelector(".email");
+
+fetch("https://jsonplaceholder.typicode.com/users/i").then((response) => {
+    return response.json();
+})
+    .then((data) => {
+        console.log(data);
+        emailRef.innerHTML = data.email
+    })
+
+
+async function main() {
+	const response = await fetch("https://jsonplaceholder.typicode.com/users/1");								-	'Async/Await' method
+	const data = await response.json();
+	emailRef.innerHTML = data.email
+}
+
+
+const statusRef = document.querySelector('status')
+
+function getSubscriptionStatus() {
+    return new Promise((resolve, reject) => {
+        resolve("VIP")
+    })
+}
+
+console.log(getSubscriptionStatus())
+
+
+    // Challenge //
+
+function getVideo(subscriptionStatus) {
+    return new Promise((resolve, reject) => {
+       if (subscriptionStatus === "VIP") {
+        resolve("show video")
+       }
+       else if (subscriptionStatus === "FREE") {
+        resolve("show trailer")
+       }
+       else {
+        reject("no video")
+       }
+    })
+}
+
+async function main () {
+    const status = await getSubscriptionStatus();
+    statusRef.innerHTML = status;
+    console.log(await getVideo(status))
+}
